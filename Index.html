@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 熊本福岡自駕之旅 (3/2-3/6)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #f3f4f6; }
+        .timeline-line { position: absolute; left: 24px; top: 0; bottom: 0; width: 2px; background-color: #e5e7eb; z-index: 0; }
+        .card-shadow { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); }
+    </style>
+</head>
+<body class="text-gray-800 pb-10">
+
+    <header class="bg-blue-600 text-white p-6 rounded-b-3xl shadow-lg sticky top-0 z-50">
+        <h1 class="text-2xl font-bold text-center mb-2">九州自駕行 2026 🚗</h1>
+        <div class="flex justify-between items-center text-sm bg-blue-700/50 p-3 rounded-lg backdrop-blur-sm">
+            <div class="text-center">
+                <p class="opacity-75">TPE 台北</p>
+                <p class="font-bold text-lg">14:30</p>
+            </div>
+            <div class="flex flex-col items-center">
+                <i class="fa-solid fa-plane text-yellow-300"></i>
+                <span class="text-xs mt-1">3/2 去程</span>
+            </div>
+            <div class="text-center">
+                <p class="opacity-75">KMJ 熊本</p>
+                <p class="font-bold text-lg">17:30</p>
+            </div>
+        </div>
+        <div class="flex justify-between items-center text-sm bg-blue-700/50 p-3 rounded-lg mt-2 backdrop-blur-sm">
+            <div class="text-center">
+                <p class="opacity-75">KMJ 熊本</p>
+                <p class="font-bold text-lg">18:30</p>
+            </div>
+            <div class="flex flex-col items-center">
+                <i class="fa-solid fa-plane text-yellow-300 transform rotate-180"></i>
+                <span class="text-xs mt-1">3/6 回程</span>
+            </div>
+            <div class="text-center">
+                <p class="opacity-75">TPE 台北</p>
+                <p class="font-bold text-lg">20:05</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-md mx-auto mt-6 px-4" id="itinerary-container">
+        </main>
+
+    <footer class="text-center text-gray-400 text-sm mt-8 mb-4">
+        <p>Family Trip 2026</p>
+    </footer>
+
+    <script>
+        // Data Structure
+        const itineraryData = [
+            {
+                day: 1,
+                date: "3/2 (一)",
+                location: "台北 ✈️ 熊本",
+                weather: { icon: "fa-cloud-sun", temp: "8°C - 16°C", text: "多雲時晴" },
+                hotel: "星野 OMO5 熊本",
+                timeline: [
+                    { time: "14:30", title: "桃園機場出發", icon: "fa-plane-departure", desc: "CI/JX 航班" },
+                    { time: "17:30", title: "抵達熊本機場", icon: "fa-plane-arrival", desc: "辦理入境手續" },
+                    { time: "19:00", title: "取車 & 飯店 Check-in", icon: "fa-car", desc: "前往 OMO5 熊本 (自駕進市區)", map: "OMO5 Kumamoto" },
+                    { 
+                        time: "Dinner", 
+                        title: "晚餐：熊本屋台村", 
+                        icon: "fa-utensils", 
+                        desc: "體驗熊本在地美食",
+                        map: "Kumamoto Yatai Mura",
+                        tabelog: [
+                            { name: "勝烈亭 (炸豬排)", score: "3.78", link: "https://tabelog.com/kumamoto/A4301/A430101/43000030/", note: "熊本第一名炸豬排" },
+                            { name: "菅乃屋 (馬肉料理)", score: "3.72", link: "https://tabelog.com/kumamoto/A4301/A430101/43000003/", note: "熊本必吃特色料理" },
+                            { name: "黑亭 (熊本拉麵)", score: "3.65", link: "https://tabelog.com/kumamoto/A4301/A430101/43000017/", note: "蒜味焦香豚骨拉麵" }
+                        ]
+                    },
+                    { time: "21:00", title: "市區散步 / 上通下通", icon: "fa-walking", desc: "享受熊本夜晚", map: "Shimotori Shopping Arcade" }
+                ]
+            },
+            {
+                day: 2,
+                date: "3/3 (二)",
+                location: "熊本 ➝ 阿蘇 ➝ 別府",
+                weather: { icon: "fa-sun", temp: "5°C - 14°C", text: "山區晴朗" },
+                hotel: "八湯御宿 野乃 別府",
+                timeline: [
+                    { time: "10:00", title: "熊本市區出發", icon: "fa-car", desc: "前往阿蘇山" },
+                    { time: "11:30", title: "阿蘇中岳火山口", icon: "fa-volcano", desc: "壯觀火山口參觀", map: "Mount Aso Nakadake Crater" },
+                    { time: "12:40", title: "草千里之濱", icon: "fa-mountain", desc: "草原散步與午餐", map: "Kusasenri" },
+                    { 
+                        time: "Lunch", 
+                        title: "午餐推薦 (阿蘇/草千里)", 
+                        icon: "fa-utensils", 
+                        tabelog: [
+                            { name: "Imakin Shokudo", score: "3.75", link: "https://tabelog.com/kumamoto/A4302/A430201/43000063/", note: "百年老店 赤牛丼 (需排隊)" },
+                            { name: "山賊旅路", score: "3.55", link: "https://tabelog.com/kumamoto/A4302/A430201/43000257/", note: "阿蘇高菜飯與烤肉" },
+                            { name: "草千里景觀餐廳", score: "3.20", link: "#", note: "方便為主，風景優美" }
+                        ]
+                    },
+                    { time: "15:10", title: "由布院 (湯布院)", icon: "fa-store", desc: "湯之坪街道散步", map: "Yufuin Floral Village" },
+                    {
+                        time: "Cafe",
+                        title: "下午茶：由布院",
+                        icon: "fa-coffee",
+                        tabelog: [
+                            { name: "B-Speak", score: "3.60", link: "https://tabelog.com/oita/A4402/A440201/44000044/", note: "超人氣生乳捲" },
+                            { name: "茶房 天井棧敷", score: "3.72", link: "https://tabelog.com/oita/A4402/A440201/44000010/", note: "龜之井別莊內的復古咖啡廳" },
+                            { name: "Cafe La Ruche", score: "3.50", link: "https://tabelog.com/oita/A4402/A440201/44000083/", note: "金鱗湖畔美景咖啡" }
+                        ]
+                    },
+                    { time: "17:30", title: "抵達別府 & Check-in", icon: "fa-hotel", desc: "八湯御宿 野乃 別府", map: "Onyado Nono Beppu" },
+                    {
+                        time: "Dinner",
+                        title: "晚餐：別府",
+                        icon: "fa-utensils",
+                        tabelog: [
+                            { name: "Toyotsune (天丼)", score: "3.66", link: "https://tabelog.com/oita/A4402/A440202/44000030/", note: "別府著名的特上天丼" },
+                            { name: "胡月 (別府冷麵)", score: "3.60", link: "https://tabelog.com/oita/A4402/A440202/44000034/", note: "口感Q彈的在地冷麵" },
+                            { name: "龜正迴轉壽司", score: "3.70", link: "https://tabelog.com/oita/A4402/A440202/44004278/", note: "CP值超高大分鮮魚" }
+                        ]
+                    }
+                ]
+            },
+            {
+                day: 3,
+                date: "3/4 (三)",
+                location: "別府 ➝ 門司港 ➝ 福岡",
+                weather: { icon: "fa-cloud", temp: "9°C - 15°C", text: "移動日多雲" },
+                hotel: "西鐵克魯姆飯店 (福岡)",
+                note: "補充行程：移動至福岡的順遊路線",
+                timeline: [
+                    { time: "10:00", title: "別府出發", icon: "fa-car", desc: "前往北九州/門司港 (約1.5小時)" },
+                    { time: "11:30", title: "門司港懷舊區", icon: "fa-anchor", desc: "充滿大正浪漫的港口", map: "Mojiko Retro" },
+                    {
+                        time: "Lunch",
+                        title: "午餐：門司港",
+                        icon: "fa-utensils",
+                        tabelog: [
+                            { name: "Bear Fruits", score: "3.60", link: "https://tabelog.com/fukuoka/A4004/A400401/40000786/", note: "上戶彩推薦的燒咖哩" },
+                            { name: "伽哩本舗", score: "3.55", link: "https://tabelog.com/fukuoka/A4004/A400401/40004561/", note: "海景燒咖哩名店" }
+                        ]
+                    },
+                    { time: "13:30", title: "唐戶市場 (視情況)", icon: "fa-fish", desc: "搭船對岸吃壽司 (若非週末市場攤位較少)", map: "Karato Market" },
+                    { time: "15:30", title: "前往福岡市區", icon: "fa-car", desc: "前往博多/天神" },
+                    { time: "17:00", title: "Check-in", icon: "fa-hotel", desc: "西鐵克魯姆飯店", map: "Nishitetsu Hotel Croom Hakata" },
+                    {
+                        time: "Dinner",
+                        title: "晚餐：福岡博多",
+                        icon: "fa-utensils",
+                        tabelog: [
+                            { name: "博多Motsunabe 前田屋", score: "3.65", link: "https://tabelog.com/fukuoka/A4001/A400101/40035773/", note: "人氣牛腸鍋" },
+                            { name: "博多一雙", score: "3.75", link: "https://tabelog.com/fukuoka/A4001/A400101/40032701/", note: "泡沫系豚骨拉麵" },
+                            { name: "鳥皮屋 (Torikawa)", score: "3.58", link: "https://tabelog.com/fukuoka/A4001/A400103/40004733/", note: "博多特色烤雞皮" }
+                        ]
+                    }
+                ]
+            },
+            {
+                day: 4,
+                date: "3/5 (四)",
+                location: "福岡 ➝ 糸島/Outlet",
+                weather: { icon: "fa-sun", temp: "10°C - 17°C", text: "市區晴時多雲" },
+                hotel: "西鐵克魯姆飯店 (福岡)",
+                timeline: [
+                    { time: "09:30", title: "市區逛街", icon: "fa-shopping-bag", desc: "天神地下街、PARCO、博多車站", map: "Tenjin Underground Shopping Center" },
+                    {
+                        time: "Lunch",
+                        title: "午餐：福岡市區",
+                        icon: "fa-utensils",
+                        tabelog: [
+                            { name: "吉塚鰻魚屋", score: "3.75", link: "https://tabelog.com/fukuoka/A4001/A400102/40000017/", note: "福岡必吃鰻魚飯 (需預約)" },
+                            { name: "天麩羅處 Hirao", score: "3.68", link: "https://tabelog.com/fukuoka/A4001/A400101/40000021/", note: "現炸天婦羅定食" },
+                            { name: "Chikae (稚加榮)", score: "3.60", link: "https://tabelog.com/fukuoka/A4001/A400104/40000028/", note: "明太子豪華午餐" }
+                        ]
+                    },
+                    { time: "14:00", title: "下午行程 (二選一)", icon: "fa-map-signs", desc: "A: 糸島海岸 / B: Outlet" },
+                    { 
+                        time: "Option A", 
+                        title: "糸島海濱散步", 
+                        icon: "fa-umbrella-beach", 
+                        desc: "倫敦巴士、夫婦岩", 
+                        map: "Sakurai Futamigaura",
+                        subTitle: "糸島咖啡推薦",
+                        tabelog: [
+                           { name: "Sunset", score: "3.55", link: "https://tabelog.com/fukuoka/A4009/A400901/40000305/", note: "系島夕陽咖啡始祖" },
+                           { name: "Palm Beach", score: "3.40", link: "https://tabelog.com/fukuoka/A4009/A400901/40026330/", note: "天使之翼牆面" }
+                        ]
+                    },
+                    { 
+                        time: "Option B", 
+                        title: "Marinoa City Outlet", 
+                        icon: "fa-shopping-cart", 
+                        desc: "大型購物中心", 
+                        map: "Marinoa City FUKUOKA" 
+                    },
+                    {
+                        time: "Dinner",
+                        title: "晚餐：自由安排/屋台",
+                        icon: "fa-beer",
+                        tabelog: [
+                            { name: "中洲屋台街", score: "-", link: "https://tabelog.com/fukuoka/A4001/A400102/40000223/", note: "體驗福岡夜生活" },
+                            { name: "ShinShin 拉麵", score: "3.65", link: "https://tabelog.com/fukuoka/A4001/A400103/40004943/", note: "博多純情拉麵" }
+                        ]
+                    }
+                ]
+            },
+            {
+                day: 5,
+                date: "3/6 (五)",
+                location: "太宰府 ✈️ 回台",
+                weather: { icon: "fa-cloud-sun", temp: "9°C - 16°C", text: "適合參拜" },
+                hotel: "溫暖的家",
+                timeline: [
+                    { time: "09:00", title: "前往太宰府", icon: "fa-car", desc: "車程約40分鐘" },
+                    { time: "09:40", title: "太宰府天滿宮", icon: "fa-torii-gate", desc: "參拜學問之神、表參道", map: "Dazaifu Tenmangu" },
+                    { 
+                        time: "Snack", 
+                        title: "太宰府必吃", 
+                        icon: "fa-cookie-bite", 
+                        tabelog: [
+                            { name: "Kasanoya (梅枝餅)", score: "3.60", link: "https://tabelog.com/fukuoka/A4003/A400301/40000171/", note: "最知名的梅枝餅老店" },
+                            { name: "Starbucks 太宰府", score: "3.45", link: "https://tabelog.com/fukuoka/A4003/A400301/40032223/", note: "隈研吾設計概念店" }
+                        ]
+                    },
+                    { time: "11:10", title: "前往熊本機場", icon: "fa-route", desc: "預留2小時車程" },
+                    { time: "13:20", title: "抵達機場 & 還車", icon: "fa-car", desc: "最後採買、午餐" },
+                    { time: "18:30", title: "熊本機場起飛", icon: "fa-plane-departure", desc: "滿載回憶" }
+                ]
+            }
+        ];
+
+        function renderItinerary() {
+            const container = document.getElementById('itinerary-container');
+            let html = '';
+
+            itineraryData.forEach(day => {
+                html += `
+                    <div class="mb-8 relative">
+                        <div class="sticky top-20 z-40 bg-white/95 backdrop-blur rounded-xl p-4 shadow-md mb-4 border-l-4 border-blue-500 flex justify-between items-center">
+                            <div>
+                                <h2 class="text-xl font-bold text-blue-800">Day ${day.day}</h2>
+                                <p class="text-gray-600 font-medium">${day.date}</p>
+                            </div>
+                            <div class="text-right">
+                                <div class="flex items-center justify-end text-orange-500 mb-1">
+                                    <i class="fa-solid ${day.weather.icon} mr-2"></i>
+                                    <span class="font-bold">${day.weather.temp}</span>
+                                </div>
+                                <span class="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded">${day.weather.text}</span>
+                            </div>
+                        </div>
+
+                        <div class="ml-4 border-l-2 border-dashed border-gray-300 pl-6 pb-2 space-y-6">
+                            
+                            <div class="absolute -left-2 top-20 w-4 h-4 bg-blue-500 rounded-full border-4 border-white"></div>
+
+                            ${day.note ? `<div class="bg-yellow-50 text-yellow-800 p-2 text-sm rounded border border-yellow-200 mb-4"><i class="fa-solid fa-circle-info mr-1"></i> ${day.note}</div>` : ''}
+
+                            ${day.timeline.map(item => {
+                                // Maps URL
+                                const mapUrl = item.map ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.map)}` : null;
+                                
+                                // Render Tabelog Section
+                                let tabelogHtml = '';
+                                if (item.tabelog) {
+                                    tabelogHtml = `
+                                        <div class="mt-3 bg-orange-50 rounded-lg p-3 border border-orange-100">
+                                            <div class="flex items-center text-orange-600 text-sm font-bold mb-2">
+                                                <i class="fa-solid fa-star mr-1"></i> Tabelog 精選推薦
+                                            </div>
+                                            <div class="space-y-2">
+                                                ${item.tabelog.map(rest => `
+                                                    <a href="${rest.link}" target="_blank" class="block bg-white p-2 rounded shadow-sm hover:shadow-md transition flex justify-between items-center group">
+                                                        <div>
+                                                            <div class="font-bold text-gray-800 group-hover:text-orange-500">${rest.name}</div>
+                                                            <div class="text-xs text-gray-500">${rest.note}</div>
+                                                        </div>
+                                                        <div class="flex flex-col items-end">
+                                                            <span class="text-yellow-500 font-bold text-sm">★ ${rest.score}</span>
+                                                        </div>
+                                                    </a>
+                                                `).join('')}
+                                            </div>
+                                        </div>
+                                    `;
+                                }
+
+                                return `
+                                    <div class="relative bg-white p-4 rounded-xl card-shadow transform transition hover:-translate-y-1">
+                                        <div class="flex justify-between items-start mb-1">
+                                            <span class="inline-block px-2 py-0.5 bg-gray-100 text-gray-600 text-xs font-bold rounded">${item.time}</span>
+                                        </div>
+                                        <div class="flex items-start">
+                                            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-3 mt-1">
+                                                <i class="fa-solid ${item.icon}"></i>
+                                            </div>
+                                            <div class="flex-grow">
+                                                <h3 class="font-bold text-lg text-gray-800">${item.title}</h3>
+                                                <p class="text-gray-500 text-sm leading-relaxed">${item.desc}</p>
+                                                ${item.subTitle ? `<p class="text-xs font-bold text-gray-400 mt-1 uppercase">${item.subTitle}</p>` : ''}
+                                                ${tabelogHtml}
+                                            </div>
+                                        </div>
+                                        ${mapUrl ? `
+                                            <a href="${mapUrl}" target="_blank" class="mt-3 flex items-center justify-center w-full py-2 bg-blue-50 text-blue-600 text-sm font-bold rounded-lg hover:bg-blue-100 transition">
+                                                <i class="fa-solid fa-location-arrow mr-2"></i> 導航
+                                            </a>
+                                        ` : ''}
+                                    </div>
+                                `;
+                            }).join('')}
+                            
+                            <div class="relative bg-indigo-900 text-white p-4 rounded-xl card-shadow mt-4">
+                                <div class="flex items-center">
+                                    <i class="fa-solid fa-bed text-indigo-300 mr-3 text-xl"></i>
+                                    <div>
+                                        <div class="text-xs text-indigo-300 uppercase">Accommodation</div>
+                                        <div class="font-bold text-lg">${day.hotel}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // Initialize
+        renderItinerary();
+    </script>
+</body>
+</html>
